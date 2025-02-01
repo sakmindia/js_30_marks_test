@@ -273,7 +273,8 @@
 
         // Dynamic Quiz Content
         const questions = [
-    {
+
+             {
         question: "Which of the following is the correct way to declare a variable in JavaScript?",
         options: ['var variable', 'let variable', 'const variable', 'All of the above'],
         correct: 3
@@ -283,150 +284,151 @@
         options: ['boolean', 'number', 'string', 'undefined'],
         correct: 0
     },
-    // {
-    //     question: "What is the result of typeof 'Hello' in JavaScript?",
-    //     options: ['string', 'number', 'boolean', 'object'],
-    //     correct: 0
-    // },
-    // {
-    //     question: "Which operator is used to assign a value to a variable in JavaScript?",
-    //     options: ['=', '==', '===', '!='],
-    //     correct: 0
-    // },
-    // {
-    //     question: "What is the output of 10 + '10' in JavaScript?",
-    //     options: ['20', '1010', 'NaN', 'undefined'],
-    //     correct: 1
-    // },
+    {
+        question: "What is the result of typeof 'Hello' in JavaScript?",
+        options: ['string', 'number', 'boolean', 'object'],
+        correct: 0
+    },
+    {
+        question: "Which operator is used to assign a value to a variable in JavaScript?",
+        options: ['=', '==', '===', '!='],
+        correct: 0
+    },
+    {
+        question: "What is the output of 10 + '10' in JavaScript?",
+        options: ['20', '1010', 'NaN', 'undefined'],
+        correct: 1
+    },
 
-    // {
-    //     question: "Which of these operators is used to compare both the value and type in JavaScript?",
-    //     options: ['==', '===', '!=', '!=='],
-    //     correct: 1
-    // },
-    // {
-    //     question: "Which of the following operators is used to check equality of two values without considering the type?",
-    //     options: ['==', '===', '!=', '!=='],
-    //     correct: 0
-    // },
-    // {
-    //     question: "Which of the following control structures is used to execute a block of code only if a condition is true?",
-    //     options: ['if', 'switch', 'for', 'while'],
-    //     correct: 0
-    // },
-    // {
-    //     question: "Which statement is used to exit a loop in JavaScript?",
-    //     options: ['continue', 'exit', 'break', 'return'],
-    //     correct: 2
-    // },
+    {
+        question: "Which of these operators is used to compare both the value and type in JavaScript?",
+        options: ['==', '===', '!=', '!=='],
+        correct: 1
+    },
+    {
+        question: "Which of the following operators is used to check equality of two values without considering the type?",
+        options: ['==', '===', '!=', '!=='],
+        correct: 0
+    },
+    {
+        question: "Which of the following control structures is used to execute a block of code only if a condition is true?",
+        options: ['if', 'switch', 'for', 'while'],
+        correct: 0
+    },
+    {
+        question: "Which statement is used to exit a loop in JavaScript?",
+        options: ['continue', 'exit', 'break', 'return'],
+        correct: 2
+    },
  
-    // {
-    //     question: "Which of the following is a correct 'for' loop syntax in JavaScript?",
-    //     options: ['for (let i = 0; i < 10; i++)', 'for (let i = 0, i < 10, i++)', 'for (let i = 0 to 10)', 'None of the above'],
-    //     correct: 0
-    // },
-    // {
-    //     question: "What will be the output of the following code: for (let i = 0; i < 3; i++) { console.log(i); }",
-    //     options: ['1 2 3', '0 1 2', '0 1 2 3', '0 1'],
-    //     correct: 1
-    // },
-    // {
-    //     question: "What does a 'while' loop do in JavaScript?",
-    //     options: ['Repeats a block of code as long as a specified condition is true', 'Repeats a block of code a set number of times', 'Iterates over an array', 'None of the above'],
-    //     correct: 0
-    // },
-    // {
-    //     question: "Which of the following is used to create an infinite loop in JavaScript?",
-    //     options: ['while (true)', 'for(;;)', 'while (1)', 'All of the above'],
-    //     correct: 3
-    // },
-    // {
-    //     question: "Which of the following is the correct syntax for a switch statement in JavaScript?",
-    //     options: ['switch(variable) { case value: break; }', 'switch { variable: value }', 'switch: variable case value', 'switch(variable) -> { case value: break }'],
-    //     correct: 0
-    // },
+    {
+        question: "Which of the following is a correct 'for' loop syntax in JavaScript?",
+        options: ['for (let i = 0; i < 10; i++)', 'for (let i = 0, i < 10, i++)', 'for (let i = 0 to 10)', 'None of the above'],
+        correct: 0
+    },
+    {
+        question: "What will be the output of the following code: for (let i = 0; i < 3; i++) { console.log(i); }",
+        options: ['1 2 3', '0 1 2', '0 1 2 3', '0 1'],
+        correct: 1
+    },
+    {
+        question: "What does a 'while' loop do in JavaScript?",
+        options: ['Repeats a block of code as long as a specified condition is true', 'Repeats a block of code a set number of times', 'Iterates over an array', 'None of the above'],
+        correct: 0
+    },
+    {
+        question: "Which of the following is used to create an infinite loop in JavaScript?",
+        options: ['while (true)', 'for(;;)', 'while (1)', 'All of the above'],
+        correct: 3
+    },
+    {
+        question: "Which of the following is the correct syntax for a switch statement in JavaScript?",
+        options: ['switch(variable) { case value: break; }', 'switch { variable: value }', 'switch: variable case value', 'switch(variable) -> { case value: break }'],
+        correct: 0
+    },
  
-    // {
-    //     question: "How do you add an event listener to an element in JavaScript?",
-    //     options: ['element.addEventListener()', 'element.onEvent()', 'addEvent(element)', 'None of the above'],
-    //     correct: 0
-    // },
-    // {
-    //     question: "Which method is used to get an element by its ID in JavaScript?",
-    //     options: ['getElementById()', 'querySelector()', 'getElementsByClassName()', 'querySelectorAll()'],
-    //     correct: 0
-    // },
-    // {
-    //     question: "Which event occurs when a user clicks on an element in JavaScript?",
-    //     options: ['click', 'onClick', 'mouseover', 'focus'],
-    //     correct: 1
-    // },
-    // {
-    //     question: "Which method is used to add an event listener to an element in JavaScript?",
-    //     options: ['addEventListener()', 'attachEvent()', 'bind()', 'All of the above'],
-    //     correct: 0
-    // },
-    // {
-    //     question: "Which of the following is used to set the text content of an element in JavaScript?",
-    //     options: ['innerHTML', 'textContent', 'setText()', 'innerText'],
-    //     correct: 1
-    // },
-    // {
-    //     question: "What will be the output of the following code: let x = 10; let y = '10'; console.log(x === y);",
-    //     options: ['true', 'false', 'NaN', 'undefined'],
-    //     correct: 1
-    // },
-    // {
-    //     question: "Which of the following methods is used to remove an element from the DOM?",
-    //     options: ['removeChild()', 'delete()', 'remove()', 'None of the above'],
-    //     correct: 0
-    // },
-    // {
-    //     question: "What is the purpose of the 'setTimeout()' function in JavaScript?",
-    //     options: ['Executes a function after a specified time delay', 'Repeatedly executes a function at specified intervals', 'Stops a function from executing', 'None of the above'],
-    //     correct: 0
-    // },
-    // {
-    //     question: "Which method is used to create a new element in the DOM?",
-    //     options: ['createElement()', 'createNode()', 'newElement()', 'None of the above'],
-    //     correct: 0
-    // },
-    // {
-    //     question: "How can you change the background color of an element using JavaScript?",
-    //     options: ['element.style.backgroundColor = "blue";', 'element.backgroundColor = "blue";', 'element.setBackground("blue");', 'None of the above'],
-    //     correct: 0
-    // },
-    // {
-    //     question: "Which method is used to remove an event listener from an element?",
-    //     options: ['removeEventListener()', 'detachEvent()', 'off()', 'removeListener()'],
-    //     correct: 0
-    // },
-    // {
-    //     question: "What is the purpose of the 'preventDefault()' method in JavaScript?",
-    //     options: ['To stop the default behavior of an event', 'To prevent the event from bubbling', 'To stop event propagation', 'None of the above'],
-    //     correct: 0
-    // },
-    // {
-    //     question: "What will be the output of the following code: let a = 5; let b = 10; a = b; console.log(a);",
-    //     options: ['5', '10', 'undefined', 'NaN'],
-    //     correct: 1
-    // },
-    // {
-    //     question: "Which of the following methods is used to change the HTML content of an element?",
-    //     options: ['innerHTML', 'innerText', 'textContent', 'All of the above'],
-    //     correct: 0
-    // },
-    // {
-    //     question: "Which JavaScript method is used to find an element by class name?",
-    //     options: ['getElementsByClassName()', 'querySelector()', 'querySelectorAll()', 'All of the above'],
-    //     correct: 0
-    // },
+    {
+        question: "How do you add an event listener to an element in JavaScript?",
+        options: ['element.addEventListener()', 'element.onEvent()', 'addEvent(element)', 'None of the above'],
+        correct: 0
+    },
+    {
+        question: "Which method is used to get an element by its ID in JavaScript?",
+        options: ['getElementById()', 'querySelector()', 'getElementsByClassName()', 'querySelectorAll()'],
+        correct: 0
+    },
+    {
+        question: "Which event occurs when a user clicks on an element in JavaScript?",
+        options: ['click', 'onClick', 'mouseover', 'focus'],
+        correct: 1
+    },
+    {
+        question: "Which method is used to add an event listener to an element in JavaScript?",
+        options: ['addEventListener()', 'attachEvent()', 'bind()', 'All of the above'],
+        correct: 0
+    },
+    {
+        question: "Which of the following is used to set the text content of an element in JavaScript?",
+        options: ['innerHTML', 'textContent', 'setText()', 'innerText'],
+        correct: 1
+    },
+    {
+        question: "What will be the output of the following code: let x = 10; let y = '10'; console.log(x === y);",
+        options: ['true', 'false', 'NaN', 'undefined'],
+        correct: 1
+    },
+    {
+        question: "Which of the following methods is used to remove an element from the DOM?",
+        options: ['removeChild()', 'delete()', 'remove()', 'None of the above'],
+        correct: 0
+    },
+    {
+        question: "What is the purpose of the 'setTimeout()' function in JavaScript?",
+        options: ['Executes a function after a specified time delay', 'Repeatedly executes a function at specified intervals', 'Stops a function from executing', 'None of the above'],
+        correct: 0
+    },
+    {
+        question: "Which method is used to create a new element in the DOM?",
+        options: ['createElement()', 'createNode()', 'newElement()', 'None of the above'],
+        correct: 0
+    },
+    {
+        question: "How can you change the background color of an element using JavaScript?",
+        options: ['element.style.backgroundColor = "blue";', 'element.backgroundColor = "blue";', 'element.setBackground("blue");', 'None of the above'],
+        correct: 0
+    },
+    {
+        question: "Which method is used to remove an event listener from an element?",
+        options: ['removeEventListener()', 'detachEvent()', 'off()', 'removeListener()'],
+        correct: 0
+    },
+    {
+        question: "What is the purpose of the 'preventDefault()' method in JavaScript?",
+        options: ['To stop the default behavior of an event', 'To prevent the event from bubbling', 'To stop event propagation', 'None of the above'],
+        correct: 0
+    },
+    {
+        question: "What will be the output of the following code: let a = 5; let b = 10; a = b; console.log(a);",
+        options: ['5', '10', 'undefined', 'NaN'],
+        correct: 1
+    },
+    {
+        question: "Which of the following methods is used to change the HTML content of an element?",
+        options: ['innerHTML', 'innerText', 'textContent', 'All of the above'],
+        correct: 0
+    },
+    {
+        question: "Which JavaScript method is used to find an element by class name?",
+        options: ['getElementsByClassName()', 'querySelector()', 'querySelectorAll()', 'All of the above'],
+        correct: 0
+    },
 
-    // {
-    //     question: "What is the result of 'false' == 0 in JavaScript?",
-    //     options: ['true', 'false', 'NaN', 'undefined'],
-    //     correct: 0
-    // }
+    {
+        question: "What is the result of 'false' == 0 in JavaScript?",
+        options: ['true', 'false', 'NaN', 'undefined'],
+        correct: 0
+    }
+ 
 ]
 ;
 
