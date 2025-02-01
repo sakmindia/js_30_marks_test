@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Fixed Navbar */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #3f038f;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            z-index: 1000;
+        }
+
+        /* Timer styling under the navbar */
+        .timer {
+            text-align: right;
+            font-size: 18px;
+            margin: 20px 20px;
+            position: fixed;
+            top:100px;
+            right: 0;
+            padding: 12px 24px;
+            background-color: #3f038f;
+            color: white;
+            border-radius: 10px;
+        }
+
+        /* Center the quiz container with padding */
+        .quiz-container {
+            padding: 20px;
+            margin: 0 auto;
+            width: 70%;
+            max-width: 900px;
+            margin-top: 100px; /* Space for fixed navbar */
+        }
+
+        .question-container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 15px;
+        }
+
+        .question-container p {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .question-container input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        button {
+            background-color: #3f038f;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #5e0cbe;
+        }
+
+        .result-popup, .answer-page {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            z-index: 999;
+            width: 80%;
+            max-width: 500px;
+        }
+
+        .result-popup h2, .answer-page h2 {
+            margin-bottom: 20px;
+        }
+
+        .answer-page p {
+            text-align: left;
+            margin: 10px 0;
+            padding: 5px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+        }
+
+        .correct-answer {
+            color: #4caf50;
+        }
+
+        .incorrect-answer {
+            color: #f44336;
+        }
+
+        .highlight {
+            background-color: #ffeb3b;
+        }
+
+        .highlight-btn {
+            background-color: #ff5722;
+        }
+
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-box {
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            width: 300px; /* Set fixed width for form popup */
+            position: absolute;
+            top: 50%;
+            left:50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .form-box input {
+            margin-bottom: 10px;
+            padding: 8px;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .form-box button {
+            width: 100%;
+            padding: 10px;
+        }
+
+        .pie-chart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 250px;
+            margin: 20px 0;
+        }
+
+        .result-info {
+            margin-bottom: 20px;
+        }
+
+        .score-percentage {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .time-taken {
+            font-size: 16px;
+            color: #555;
+        }
+
+        /* Adjusting for better positioning of the form */
+        .form-box input, .form-box button {
+            margin: 5px 0;
+        }
+
+        .navbar {width: 100%; height: 100px; background-color: #3f038f;
+            display: flex; align-items: center; justify-content: space-between; padding: 0 100px; box-sizing: border-box;
+            
+        }
+        .navbar img { height: 65%;}
+        .navbar h1 {color: white;}
+        .navbar button {background-color: white; color: black; font-weight: bolder;}
+
+
+        @media only screen and (max-width:540px) {
+            .navbar { height: 50px; padding: 0 30px; }
+            .navbar h1 { font-size: 12px;}
+            .navbar button {padding: 5px 15px;}
+        }
+
+</style>
+</head>
+<body>
+    
+    <nav class="navbar"><img src="next-academy-logo.png" alt=""> <h1>JavaScript Test</h1> <button>30 Marks</button></nav>
+
+    <!-- Popup to collect student details -->
+    <div id="student-popup" class="form-container">
+        <div class="form-box">
+            <h2>Enter Your Details</h2>
+            <form id="student-form">
+                <input type="text" id="student-name" placeholder="Name" required>
+                <input type="text" id="student-roll" placeholder="Roll Number" required>
+                <button type="submit">Start Quiz</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Quiz Section -->
+    <div class="quiz-container" style="display:none;">
+        <div class="timer" id="timer">Time Left: 15:00</div>
+
+        <div id="quiz-content"></div>
+
+        <button onclick="submitQuiz()">Submit Quiz</button>
+    </div>
+
+    <!-- Result Popup -->
+    <div id="result-popup" class="result-popup">
+        <h2>Your Result, <span id="student-name-result"></span></h2>
+        <div class="result-info">
+            <p id="result-msg"></p>
+            <p class="score-percentage" id="score-percentage"></p>
+            <p class="time-taken" id="time-taken"></p>
+        </div>
+        <div class="pie-chart-container">
+            <canvas id="result-pie-chart"></canvas>
+        </div>
+        <!-- <button onclick="showAnswers()">Show Correct Answers</button> -->
+    </div>
+
+    <!-- Answer Review Page -->
+    <div id="answer-page" class="answer-page">
+        <h2>Correct Answers</h2>
+        <div id="answers-list"></div>
+        <button onclick="closeAnswers()">Close</button>
+    </div>
+
+    <script>
+        // Timer Setup
+        let timeLeft = 15 * 60; // 20 minutes in seconds
+        let timer;
+        let startTime;
+
+        function startTimer() {
+            startTime = Date.now();
+            timer = setInterval(() => {
+                timeLeft--;
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                document.getElementById("timer").textContent = `Time Left: ${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    alert("Time's up!");
+                    submitQuiz();
+                }
+            }, 1000);
+        }
+
+        // Dynamic Quiz Content
+        const questions = [
+    {
+        question: "Which of the following is the correct way to declare a variable in JavaScript?",
+        options: ['var variable', 'let variable', 'const variable', 'All of the above'],
+        correct: 3
+    },
+    {
+        question: "Which data type is used to represent a true/false value in JavaScript?",
+        options: ['boolean', 'number', 'string', 'undefined'],
+        correct: 0
+    },
+    // {
+    //     question: "What is the result of typeof 'Hello' in JavaScript?",
+    //     options: ['string', 'number', 'boolean', 'object'],
+    //     correct: 0
+    // },
+    // {
+    //     question: "Which operator is used to assign a value to a variable in JavaScript?",
+    //     options: ['=', '==', '===', '!='],
+    //     correct: 0
+    // },
+    // {
+    //     question: "What is the output of 10 + '10' in JavaScript?",
+    //     options: ['20', '1010', 'NaN', 'undefined'],
+    //     correct: 1
+    // },
+
+    // {
+    //     question: "Which of these operators is used to compare both the value and type in JavaScript?",
+    //     options: ['==', '===', '!=', '!=='],
+    //     correct: 1
+    // },
+    // {
+    //     question: "Which of the following operators is used to check equality of two values without considering the type?",
+    //     options: ['==', '===', '!=', '!=='],
+    //     correct: 0
+    // },
+    // {
+    //     question: "Which of the following control structures is used to execute a block of code only if a condition is true?",
+    //     options: ['if', 'switch', 'for', 'while'],
+    //     correct: 0
+    // },
+    // {
+    //     question: "Which statement is used to exit a loop in JavaScript?",
+    //     options: ['continue', 'exit', 'break', 'return'],
+    //     correct: 2
+    // },
+ 
+    // {
+    //     question: "Which of the following is a correct 'for' loop syntax in JavaScript?",
+    //     options: ['for (let i = 0; i < 10; i++)', 'for (let i = 0, i < 10, i++)', 'for (let i = 0 to 10)', 'None of the above'],
+    //     correct: 0
+    // },
+    // {
+    //     question: "What will be the output of the following code: for (let i = 0; i < 3; i++) { console.log(i); }",
+    //     options: ['1 2 3', '0 1 2', '0 1 2 3', '0 1'],
+    //     correct: 1
+    // },
+    // {
+    //     question: "What does a 'while' loop do in JavaScript?",
+    //     options: ['Repeats a block of code as long as a specified condition is true', 'Repeats a block of code a set number of times', 'Iterates over an array', 'None of the above'],
+    //     correct: 0
+    // },
+    // {
+    //     question: "Which of the following is used to create an infinite loop in JavaScript?",
+    //     options: ['while (true)', 'for(;;)', 'while (1)', 'All of the above'],
+    //     correct: 3
+    // },
+    // {
+    //     question: "Which of the following is the correct syntax for a switch statement in JavaScript?",
+    //     options: ['switch(variable) { case value: break; }', 'switch { variable: value }', 'switch: variable case value', 'switch(variable) -> { case value: break }'],
+    //     correct: 0
+    // },
+ 
+    // {
+    //     question: "How do you add an event listener to an element in JavaScript?",
+    //     options: ['element.addEventListener()', 'element.onEvent()', 'addEvent(element)', 'None of the above'],
+    //     correct: 0
+    // },
+    // {
+    //     question: "Which method is used to get an element by its ID in JavaScript?",
+    //     options: ['getElementById()', 'querySelector()', 'getElementsByClassName()', 'querySelectorAll()'],
+    //     correct: 0
+    // },
+    // {
+    //     question: "Which event occurs when a user clicks on an element in JavaScript?",
+    //     options: ['click', 'onClick', 'mouseover', 'focus'],
+    //     correct: 1
+    // },
+    // {
+    //     question: "Which method is used to add an event listener to an element in JavaScript?",
+    //     options: ['addEventListener()', 'attachEvent()', 'bind()', 'All of the above'],
+    //     correct: 0
+    // },
+    // {
+    //     question: "Which of the following is used to set the text content of an element in JavaScript?",
+    //     options: ['innerHTML', 'textContent', 'setText()', 'innerText'],
+    //     correct: 1
+    // },
+    // {
+    //     question: "What will be the output of the following code: let x = 10; let y = '10'; console.log(x === y);",
+    //     options: ['true', 'false', 'NaN', 'undefined'],
+    //     correct: 1
+    // },
+    // {
+    //     question: "Which of the following methods is used to remove an element from the DOM?",
+    //     options: ['removeChild()', 'delete()', 'remove()', 'None of the above'],
+    //     correct: 0
+    // },
+    // {
+    //     question: "What is the purpose of the 'setTimeout()' function in JavaScript?",
+    //     options: ['Executes a function after a specified time delay', 'Repeatedly executes a function at specified intervals', 'Stops a function from executing', 'None of the above'],
+    //     correct: 0
+    // },
+    // {
+    //     question: "Which method is used to create a new element in the DOM?",
+    //     options: ['createElement()', 'createNode()', 'newElement()', 'None of the above'],
+    //     correct: 0
+    // },
+    // {
+    //     question: "How can you change the background color of an element using JavaScript?",
+    //     options: ['element.style.backgroundColor = "blue";', 'element.backgroundColor = "blue";', 'element.setBackground("blue");', 'None of the above'],
+    //     correct: 0
+    // },
+    // {
+    //     question: "Which method is used to remove an event listener from an element?",
+    //     options: ['removeEventListener()', 'detachEvent()', 'off()', 'removeListener()'],
+    //     correct: 0
+    // },
+    // {
+    //     question: "What is the purpose of the 'preventDefault()' method in JavaScript?",
+    //     options: ['To stop the default behavior of an event', 'To prevent the event from bubbling', 'To stop event propagation', 'None of the above'],
+    //     correct: 0
+    // },
+    // {
+    //     question: "What will be the output of the following code: let a = 5; let b = 10; a = b; console.log(a);",
+    //     options: ['5', '10', 'undefined', 'NaN'],
+    //     correct: 1
+    // },
+    // {
+    //     question: "Which of the following methods is used to change the HTML content of an element?",
+    //     options: ['innerHTML', 'innerText', 'textContent', 'All of the above'],
+    //     correct: 0
+    // },
+    // {
+    //     question: "Which JavaScript method is used to find an element by class name?",
+    //     options: ['getElementsByClassName()', 'querySelector()', 'querySelectorAll()', 'All of the above'],
+    //     correct: 0
+    // },
+
+    // {
+    //     question: "What is the result of 'false' == 0 in JavaScript?",
+    //     options: ['true', 'false', 'NaN', 'undefined'],
+    //     correct: 0
+    // }
+]
+;
+
+        // Load Quiz Again
+        function loadQuiz() {
+            const quizContent = document.getElementById("quiz-content");
+            quizContent.innerHTML = ""; // Clear previous questions
+            questions.forEach((q, index) => {
+                let questionHTML = `
+                    <div class="question-container">
+                        <p>${index + 1}. ${q.question}</p>
+                        ${q.options.map((option, i) => 
+                            `<input type="radio" name="q${index}" value="${i}" id="q${index}-opt${i}"> 
+                            <label for="q${index}-opt${i}">${option}</label><br>`
+                        ).join('')}
+                    </div>`;
+                quizContent.innerHTML += questionHTML;
+            });
+        }
+
+        let answers = [];
+
+        function submitQuiz() {
+            clearInterval(timer);
+            let score = 0;
+            answers = [];
+            questions.forEach((q, index) => {
+                const selectedAnswer = document.querySelector(`input[name="q${index}"]:checked`);
+                const correctAnswer = q.correct;
+                const userAnswer = selectedAnswer ? parseInt(selectedAnswer.value) : null;
+                answers.push({
+                    question: q.question,
+                    options: q.options,
+                    correctAnswer: q.options[correctAnswer],
+                    selectedAnswer: userAnswer !== null ? q.options[userAnswer] : 'None',
+                    isCorrect: userAnswer === correctAnswer
+                });
+                if (userAnswer === correctAnswer) score++;
+            });
+
+            const totalQuestions = questions.length;
+            const percentage = Math.round((score / totalQuestions) * 100);
+
+            // Calculate the time taken in minutes and seconds
+            const elapsedTimeInSeconds = Math.floor((Date.now() - startTime) / 1000);
+            const minutes = Math.floor(elapsedTimeInSeconds / 60);
+            const seconds = elapsedTimeInSeconds % 60;
+
+            // Displaying results
+            document.getElementById("student-name-result").textContent = document.getElementById("student-name").value;
+            document.getElementById("result-msg").textContent = `You answered ${score} out of ${totalQuestions} questions correctly.`;
+            document.getElementById("score-percentage").textContent = `Your score: ${percentage}%`;
+            document.getElementById("time-taken").textContent = `Time taken: ${minutes} minutes ${seconds} seconds`;
+
+            // Displaying the Pie Chart
+            const ctx = document.getElementById('result-pie-chart').getContext('2d');
+            const resultPieChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Correct', 'Incorrect'],
+                    datasets: [{
+                        label: 'Quiz Result',
+                        data: [score, totalQuestions - score],
+                        backgroundColor: ['#4caf50', '#f44336'],
+                    }]
+                }
+            });
+
+            // Show the result popup
+            document.getElementById("result-popup").style.display = 'block';
+        }
+
+        function showAnswers() {
+            const answersList = document.getElementById("answers-list");
+            answersList.innerHTML = '';
+            answers.forEach((answer, index) => {
+                const isCorrectClass = answer.isCorrect ? 'correct-answer' : 'incorrect-answer';
+                answersList.innerHTML += `
+                    <p>${index + 1}. ${answer.question}
+                        <br><strong>Correct Answer:</strong> <span class="${isCorrectClass}">${answer.correctAnswer}</span>
+                        <br><strong>Your Answer:</strong> <span class="${isCorrectClass}">${answer.selectedAnswer}</span>
+                    </p>`;
+            });
+            document.getElementById("answer-page").style.display = 'block';
+        }
+
+        function closeAnswers() {
+            document.getElementById("answer-page").style.display = 'none';
+        }
+
+        // Show student form popup at the start
+        document.getElementById("student-popup").style.display = 'block';
+
+        // Start the quiz when student form is submitted
+        document.getElementById("student-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+            document.getElementById("student-popup").style.display = 'none';
+            document.querySelector(".quiz-container").style.display = 'block';
+            startTimer();
+            loadQuiz();
+        });
+    </script>
+</body>
+</html>
