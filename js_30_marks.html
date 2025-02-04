@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JS Test</title>
+    <title>HTML 50 MARKS TEST</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
@@ -33,7 +33,7 @@
             font-size: 18px;
             margin: 20px 20px;
             position: fixed;
-            top:100px;
+            top:30px;
             right: 0;
             padding: 12px 24px;
             background-color: #3f038f;
@@ -191,22 +191,41 @@
             display: flex; align-items: center; justify-content: space-between; padding: 0 100px; box-sizing: border-box;
             
         }
-        .navbar img { height: 65%;}
-        .navbar h1 {color: white;}
-        .navbar button {background-color: white; color: black; font-weight: bolder;}
+        .navbar img { height: 65%; }
+        .navbar h1 { color: white; }
+        .navbar button { background-color: white; color: black; font-weight: bolder; }
 
 
         @media only screen and (max-width:540px) {
             .navbar { height: 50px; padding: 0 30px; }
-            .navbar h1 { font-size: 12px;}
-            .navbar button {padding: 5px 15px;}
+            .navbar h1 { font-size: 12px; }
+            .navbar button { padding: 5px 15px; }
         }
 
-</style>
+        /* Scrollable Answer List */
+        .answers-list-container {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        /* Close button positioning */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
     
-    <nav class="navbar"><img src="next-academy-logo.png" alt=""> <h1>JavaScript Test</h1> <button>30 Marks</button></nav>
+    <nav class="navbar"><img src="next-academy-logo.png" alt=""> <h1>HTML TEST</h1> <button>50 Marks</button></nav>
 
     <!-- Popup to collect student details -->
     <div id="student-popup" class="form-container">
@@ -222,8 +241,11 @@
 
     <!-- Quiz Section -->
     <div class="quiz-container" style="display:none;">
-        <div class="timer" id="timer">Time Left: 10:00</div>
 
+        <!-- timer  -->
+        <div class="timer" id="timer">Time Left: 20:00</div>
+
+        <!-- Questions Attached in Js -->
         <div id="quiz-content"></div>
 
         <button onclick="submitQuiz()">Submit Quiz</button>
@@ -231,7 +253,8 @@
 
     <!-- Result Popup -->
     <div id="result-popup" class="result-popup">
-        <h2>Your Result, <span id="student-name-result"></span></h2>
+        <button class="course Name">HTML (50 MARKS)</button>
+        <h2><span id="student-name-result"></span></h2>
         <div class="result-info">
             <p id="result-msg"></p>
             <p class="score-percentage" id="score-percentage"></p>
@@ -240,19 +263,20 @@
         <div class="pie-chart-container">
             <canvas id="result-pie-chart"></canvas>
         </div>
-        <!-- <button onclick="showAnswers()">Show Correct Answers</button> -->
+        <button onclick="showAnswers()">Show Correct Answers</button>
     </div>
 
     <!-- Answer Review Page -->
     <div id="answer-page" class="answer-page">
+        <button class="close-btn" onclick="closeAnswers()">Close</button>
         <h2>Correct Answers</h2>
-        <div id="answers-list"></div>
-        <button onclick="closeAnswers()">Close</button>
+        <div id="answers-list" class="answers-list-container"></div>
     </div>
+
 
     <script>
         // Timer Setup
-        let timeLeft = 10 * 60; // 20 minutes in seconds
+        let timeLeft = 20 * 60; // 20 minutes in seconds
         let timer;
         let startTime;
 
@@ -428,9 +452,9 @@
         options: ['true', 'false', 'NaN', 'undefined'],
         correct: 0
     }
- 
-]
-;
+
+            // Add more questions as needed
+        ];
 
         // Load Quiz Again
         function loadQuiz() {
@@ -442,8 +466,7 @@
                         <p>${index + 1}. ${q.question}</p>
                         ${q.options.map((option, i) => 
                             `<input type="radio" name="q${index}" value="${i}" id="q${index}-opt${i}"> 
-                            <label for="q${index}-opt${i}">${option}</label><br>`
-                        ).join('')}
+                            <label for="q${index}-opt${i}">${option}</label><br>`).join('')}
                     </div>`;
                 quizContent.innerHTML += questionHTML;
             });
